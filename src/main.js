@@ -19,3 +19,6 @@ game.settings = {
     runwayWidth: 400,
     numLanes: 4,
 }
+
+// reserve keyboard vars
+let Up, Down;
