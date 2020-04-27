@@ -4,7 +4,8 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('poseSpot', './assets/poseSpot.png');
+        this.load.spritesheet('poseSpot', './assets/temp_posespot.png', {frameWidth: 32,
+                frameHeight: 32});
         this.load.image('player', './assets/player.png');
     }
 
@@ -16,12 +17,16 @@ class Play extends Phaser.Scene {
         // define keyboard keys
         Up = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         Down = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-
+        poseKeys = [
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO),
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE),
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR),
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FIVE)
+        ];
+        
         // draw runway
         this.add.rectangle(0, game.config.height / 2, game.config.width, game.settings.runwayWidth, 0xFACADE).setOrigin(0,0.5);
-
-        // create player
-        this.player = new Player(this, 'player');
 
         // create poseSpot group
         this.poseSpotGroup = this.add.group({
@@ -35,6 +40,15 @@ class Play extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
+
+        // create player
+        this.player = new Player(this, 'player');
+
+        // create player/posespot overlap event
+        this.physics.world.on('overlap', (body1, body2) => {
+            body2.checkPose();
+        }, this);
+        this.physics.add.overlap(this.player, this.poseSpotGroup);
     }
 
     update() {
@@ -43,8 +57,6 @@ class Play extends Phaser.Scene {
 
     spawnPoseSpot() {
         let posespot = new PoseSpot(this, 'poseSpot');
-        posespot.setCollisionDimensions(posespot.width, posespot.height / 2, 0, posespot.height / 2); // make custom size collision box for sprite
         this.poseSpotGroup.add(posespot);
-        
     }
 }

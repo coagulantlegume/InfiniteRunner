@@ -21,4 +21,4 @@ game.settings = {
 }
 
 // reserve keyboard vars
-let Up, Down;
+let Up, Down, poseKeys;

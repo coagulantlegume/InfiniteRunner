@@ -6,6 +6,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // add to scene and physics
         scene.add.existing(this);
         scene.physics.add.existing(this);
+
+        // set overlap detection
+        this.body.onOverlap = true;
     }
     
     update() {
@@ -13,11 +16,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if(Phaser.Input.Keyboard.JustDown(Up) && 
            this.y > game.settings.pos0) {
             this.y -= game.settings.laneWidth;
+            this.depth -= 1;
         }
-        
         if(Phaser.Input.Keyboard.JustDown(Down) &&
            this.y < game.settings.pos0 + game.settings.laneWidth * (game.settings.numLanes - 1)) {
             this.y += game.settings.laneWidth;
+            this.depth += 1;
         }
     }
 
