@@ -38,10 +38,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         else { // if further than 20 pixels away, player cannot move yet
             this.params.isMoving = true;
         }
-        if(Math.abs(this.y - this.params.targetPos) > 2) { // if further than 2 pixels, keep moving
+        if(Math.abs(this.y - this.params.targetPos) > 0) { // if further than 1 pixel, keep moving
             this.body.velocity.y = 10 * (this.params.targetPos - this.y);
         }
-        else { // stop moving if within 2 pixels
+        else { // stop moving if within 1 pixel
             this.body.velocity.y = 0;
         }
     }
