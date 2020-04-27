@@ -2,6 +2,12 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, texture, frame) {
         super(scene, 75, game.settings.pos0, texture, frame);
+
+        // set parameters
+        this.params = {
+            targetPos: game.settings.pos0,
+            isMoving: false,
+        }
     
         // add to scene and physics
         scene.add.existing(this);
@@ -12,16 +18,31 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
     
     update() {
-        // calculate movement
+        // calculate keystroke
         if(Phaser.Input.Keyboard.JustDown(Up) && 
-           this.y > game.settings.pos0) {
-            this.y -= game.settings.laneWidth;
+           this.params.targetPos > game.settings.pos0 && !this.params.isMoving) {
+            this.params.targetPos -= game.settings.laneWidth;
             this.depth -= 1;
         }
         if(Phaser.Input.Keyboard.JustDown(Down) &&
-           this.y < game.settings.pos0 + game.settings.laneWidth * (game.settings.numLanes - 1)) {
-            this.y += game.settings.laneWidth;
+           this.params.targetPos < game.settings.pos0 + game.settings.laneWidth * (game.settings.numLanes - 1) && 
+           !this.params.isMoving) {
+            this.params.targetPos += game.settings.laneWidth;
             this.depth += 1;
+        }
+        
+        // calculate movement
+        if(Math.abs(this.y - this.params.targetPos) < 20) { // if within 20 pixels, let player move again
+            this.params.isMoving = false;
+        }
+        else { // if further than 20 pixels away, player cannot move yet
+            this.params.isMoving = true;
+        }
+        if(Math.abs(this.y - this.params.targetPos) > 2) { // if further than 2 pixels, keep moving
+            this.body.velocity.y = 10 * (this.params.targetPos - this.y);
+        }
+        else { // stop moving if within 2 pixels
+            this.body.velocity.y = 0;
         }
     }
 
