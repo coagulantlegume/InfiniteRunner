@@ -7,6 +7,7 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('poseSpot', './assets/temp_posespot.png', {frameWidth: 32,
                 frameHeight: 32});
         this.load.image('player', './assets/player.png');
+        this.load.image('obstacle', './assets/obstacle.png');
     }
 
     create() {
@@ -33,10 +34,23 @@ class Play extends Phaser.Scene {
             runChildUpdate: true,
         })
 
+        // create obstacle group
+        this.obstacleGroup = this.add.group({
+            runChildUpdate: true,
+        })
+
         // create poseSpot timer
         this.poseSpotTimer = this.time.addEvent({
             delay: 2000,
             callback: this.spawnPoseSpot,
+            callbackScope: this,
+            loop: true
+        });
+
+        // create obstacle timer
+        this.obstacleTimer = this.time.addEvent({
+            delay: 2000,
+            callback: this.spawnObstacle,
             callbackScope: this,
             loop: true
         });
@@ -49,6 +63,12 @@ class Play extends Phaser.Scene {
             body2.checkPose();
         }, this);
         this.physics.add.overlap(this.player, this.poseSpotGroup);
+
+        // create player/obstacle collision event
+        this.physics.world.on('collide', (body1, body2) => {
+            console.log("Tripped!");
+        }, this);
+        this.physics.add.overlap(this.player, this.poseSpotGroup);
     }
 
     update() {
@@ -57,6 +77,12 @@ class Play extends Phaser.Scene {
 
     spawnPoseSpot() {
         let posespot = new PoseSpot(this, 'poseSpot');
+        //posespot.setCollisionDimensions(posespot.width, posespot.height / 2, 0, posespot.height / 2);
         this.poseSpotGroup.add(posespot);
+    }
+
+    spawnObstacle() {
+        let obstacle = new Obstacle(this, 'obstacle');
+        this.obstacleGroup.add(obstacle);
     }
 }

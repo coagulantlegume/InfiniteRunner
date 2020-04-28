@@ -20,7 +20,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     update() {
         // calculate keystroke
         if(Phaser.Input.Keyboard.JustDown(Up) && 
-           this.params.targetPos > game.settings.pos0 && !this.params.isMoving) {
+           this.params.targetPos > game.settings.pos0 + 1
+           && !this.params.isMoving) {
             this.params.targetPos -= game.settings.laneWidth;
             this.depth -= 1;
         }

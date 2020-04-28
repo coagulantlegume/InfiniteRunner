@@ -14,7 +14,7 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
 
         // calculate position
         this.setOrigin(0,0); // set origin to upper left corner
-        this.y = game.settings.pos0 + game.settings.laneWidth * Math.floor(Math.random() * 4) - 
+        this.y = game.settings.pos0 + game.settings.laneWidth * Math.floor(Math.random() * game.settings.numLanes) - 
                  this.width / 2; // move to random aisle
         this.x = game.config.width + this.width; // move off screen
 
