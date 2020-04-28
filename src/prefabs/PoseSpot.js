@@ -28,6 +28,9 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
 
         // set texture
         this.setFrame(poseNum);
+
+        // debug color green
+        this.setDebugBodyColor(0x00FF00);
     }
     
     update() {
@@ -57,6 +60,7 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
         if(!this.params.complete && !this.attempted) { // if unattempted
             if (Phaser.Input.Keyboard.JustDown(this.params.poseKey)) { // if correct key pressed
                 this.params.complete = true;
+                this.setDebugBodyColor(0xFFFFFF);
                 console.log("Hit!");
             }
         }

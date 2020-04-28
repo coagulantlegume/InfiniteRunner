@@ -16,6 +16,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // set overlap/collide detection
         this.body.onOverlap = true;
         this.body.onCollide = true;
+
+        // set debug color
+        this.setDebugBodyColor(0x00FF00);
     }
     
     update() {
@@ -41,7 +44,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.params.isMoving = true;
         }
         if(Math.abs(this.y - this.params.targetPos) > 0) { // if further than 1 pixel, keep moving
-            this.body.velocity.y = 10 * (this.params.targetPos - this.y);
+            this.body.velocity.y = (game.settings.scrollSpeed / 30) * (this.params.targetPos - this.y);
         }
         else { // stop moving if within 1 pixel
             this.body.velocity.y = 0;
@@ -55,9 +58,21 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         colY: Y offset of collision box
     */
    setCollisionDimensions( colWidth, colHeight, colX, colY) {
-    this.body.width = colWidth;
-    this.body.height = colHeight;
-    this.body.offset.x = colX;
-    this.body.offset.y = colY;
+        this.body.width = colWidth;
+        this.body.height = colHeight;
+        this.body.offset.x = colX;
+        this.body.offset.y = colY;
+    }
+
+    tremble() {
+        this.y += 2;
+        this.setDebugBodyColor(0xFF0000);
+        this.trembleTimer = this.scene.time.addEvent({
+            delay: 200,
+            callback: () => {
+                this.setDebugBodyColor(0x00FF00);
+            },
+            callbackScope: this,
+        });
     }
 }

@@ -41,7 +41,7 @@ class Play extends Phaser.Scene {
 
         // create poseSpot timer
         this.poseSpotTimer = this.time.addEvent({
-            delay: 2000,
+            delay: 1000,
             callback: this.spawnPoseSpot,
             callbackScope: this,
             loop: true
@@ -49,11 +49,24 @@ class Play extends Phaser.Scene {
 
         // create obstacle timer
         this.obstacleTimer = this.time.addEvent({
-            delay: 2000,
+            delay: 3000,
             callback: this.spawnObstacle,
             callbackScope: this,
             loop: true
         });
+
+        // create difficulty bump timer
+        this.difficultyTimer = this.time.addEvent({
+            delay: 500,
+            callback: () => {
+                if(game.settings.spawnRate > 500) {// cap at .5 second
+                    game.settings.spawnRate -= 15;
+                }
+                game.settings.scrollSpeed += 1;
+            },
+            callbackScope: this,
+            loop: true
+        })
 
         // create player
         this.player = new Player(this, 'player');
@@ -74,10 +87,16 @@ class Play extends Phaser.Scene {
         let posespot = new PoseSpot(this, 'poseSpot');
         //posespot.setCollisionDimensions(posespot.width, posespot.height / 2, 0, posespot.height / 2);
         this.poseSpotGroup.add(posespot);
+
+        // randomize timer for next call
+        this.poseSpotTimer.delay = Math.floor((Math.random() + 1) * game.settings.spawnRate);
     }
 
     spawnObstacle() {
         let obstacle = new Obstacle(this, 'obstacle');
         this.obstacleGroup.add(obstacle);
+
+        // randomize timer for next call
+        this.obstacleTimer.delay = Math.floor((Math.random() + 1) * game.settings.spawnRate);
     }
 }

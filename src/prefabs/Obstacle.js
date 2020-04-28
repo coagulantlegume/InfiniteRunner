@@ -24,6 +24,9 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
         // set physics aspects
         this.setVelocityX(-game.settings.scrollSpeed);
         this.setImmovable();
+
+        // set debug color
+        this.setDebugBodyColor(0xFF0000);
     }
     
     update() {
@@ -39,15 +42,16 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
         colY: Y offset of collision box
     */
    setCollisionDimensions( colWidth, colHeight, colX, colY) {
-    this.body.width = colWidth;
-    this.body.height = colHeight;
-    this.body.offset.x = colX;
-    this.body.offset.y = colY;
+        this.body.width = colWidth;
+        this.body.height = colHeight;
+        this.body.offset.x = colX;
+        this.body.offset.y = colY;
     }
 
     check() {
         if(!this.params.hit) {
             console.log("tripped!");
+            this.scene.player.tremble();
             this.params.hit = true;
         }
     }
