@@ -53,7 +53,7 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
         this.body.offset.y = colY;
     }
 
-    checkPose() {
+    check() {
         if(!this.params.complete && !this.attempted) { // if unattempted
             if (Phaser.Input.Keyboard.JustDown(this.params.poseKey)) { // if correct key pressed
                 this.params.complete = true;

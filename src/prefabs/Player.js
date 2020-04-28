@@ -13,8 +13,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        // set overlap detection
+        // set overlap/collide detection
         this.body.onOverlap = true;
+        this.body.onCollide = true;
     }
     
     update() {

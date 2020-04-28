@@ -7,8 +7,7 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
 
         // set parameters
         this.params = {
-            complete: false, // tracking if player has posed on spot or not
-            attempted: false, // if attempted before, could be changed to int for multiple attempts
+            hit: false, // tracking if player has tripped over already
             obstacleNum: Math.floor(Math.random() * 4), // choose random obstacle. TODO: change 4 to number of obstacles
         };
 
@@ -44,5 +43,12 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
     this.body.height = colHeight;
     this.body.offset.x = colX;
     this.body.offset.y = colY;
+    }
+
+    check() {
+        if(!this.params.hit) {
+            console.log("tripped!");
+            this.params.hit = true;
+        }
     }
 }

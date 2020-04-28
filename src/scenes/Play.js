@@ -60,15 +60,10 @@ class Play extends Phaser.Scene {
 
         // create player/posespot overlap event
         this.physics.world.on('overlap', (body1, body2) => {
-            body2.checkPose();
+            body2.check();
         }, this);
         this.physics.add.overlap(this.player, this.poseSpotGroup);
-
-        // create player/obstacle collision event
-        this.physics.world.on('collide', (body1, body2) => {
-            console.log("Tripped!");
-        }, this);
-        this.physics.add.overlap(this.player, this.poseSpotGroup);
+        this.physics.add.overlap(this.player, this.obstacleGroup);
     }
 
     update() {
