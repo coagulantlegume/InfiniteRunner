@@ -8,9 +8,12 @@ class Play extends Phaser.Scene {
                 frameHeight: 32});
         this.load.image('player', './assets/player.png');
         this.load.image('obstacle', './assets/obstacle.png');
+        this.load.audio('bgm', './assets/funkymusic.wav');
     }
 
     create() {
+        this.sound.play('bgm');
+
         // set lane aspects
         game.settings.laneWidth = game.settings.runwayWidth / game.settings.numLanes; // set lane width for game
         game.settings.pos0 = game.config.height / 2 - game.settings.runwayWidth / 2 + game.settings.laneWidth / 2; // set furthest left position
