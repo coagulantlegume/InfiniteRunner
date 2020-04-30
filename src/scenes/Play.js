@@ -12,7 +12,9 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        this.sound.play('bgm');
+        this.music = this.sound.play('bgm', {
+            loop: true
+        });
 
         // set lane aspects
         game.settings.laneWidth = game.settings.runwayWidth / game.settings.numLanes; // set lane width for game
