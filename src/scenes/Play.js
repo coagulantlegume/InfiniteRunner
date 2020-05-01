@@ -43,17 +43,25 @@ class Play extends Phaser.Scene {
         })
 
         // create poseSpot timer
-        this.poseSpotTimer = this.time.addEvent({
-            delay: 1000,
-            callback: this.spawnPoseSpot,
-            callbackScope: this,
-            loop: true
-        });
+        //this.poseSpotTimer = this.time.addEvent({
+        //    delay: 1000,
+        //    callback: this.spawnPoseSpot,
+        //    callbackScope: this,
+        //    loop: true
+        //});
 
         // create obstacle timer
-        this.obstacleTimer = this.time.addEvent({
-            delay: 3000,
-            callback: this.spawnObstacle,
+        //this.obstacleTimer = this.time.addEvent({
+        //    delay: 3000,
+        //    callback: this.spawnObstacle,
+        //    callbackScope: this,
+        //    loop: true
+        //});
+
+        // create object spawn timer
+        this.objectTimer = this.time.addEvent({
+            delay: 1000,
+            callback: this.spawnObjects,
             callbackScope: this,
             loop: true
         });
@@ -62,10 +70,11 @@ class Play extends Phaser.Scene {
         this.difficultyTimer = this.time.addEvent({
             delay: 500,
             callback: () => {
-                if(game.settings.spawnRate > 500) {// cap at .5 second
-                    game.settings.spawnRate -= 15;
+                if(game.settings.spawnRate > 200) {// cap at .2 second (after 95 seconds playtime)
+                    console.log(game.settings.spawnRate);
+                    game.settings.spawnRate -= 7;
                 }
-                game.settings.scrollSpeed += 1;
+                game.settings.scrollSpeed += .5;
             },
             callbackScope: this,
             loop: true
@@ -92,7 +101,7 @@ class Play extends Phaser.Scene {
         this.poseSpotGroup.add(posespot);
 
         // randomize timer for next call
-        this.poseSpotTimer.delay = Math.floor((Math.random() + 1) * game.settings.spawnRate);
+        //this.poseSpotTimer.delay = Math.floor((Math.random() + 1) * game.settings.spawnRate);
     }
 
     spawnObstacle() {
@@ -100,6 +109,29 @@ class Play extends Phaser.Scene {
         this.obstacleGroup.add(obstacle);
 
         // randomize timer for next call
-        this.obstacleTimer.delay = Math.floor((Math.random() + 1) * game.settings.spawnRate);
+        //this.obstacleTimer.delay = Math.floor((Math.random() + 1) * game.settings.spawnRate);
+    }
+
+    spawnObjects() {
+        // calculate chance of spawning each type of object.
+        if (game.settings.spawnRate > 200) {// above minimal calculation
+           // begins game with 75% chance of spawning pose spot, caps at 15% chance of pose spot
+           if (Math.random() <= (game.settings.startRate / 200 * 1.25 - 
+               game.settings.startRate / game.settings.spawnRate) / 33.3) {
+               this.spawnPoseSpot();
+           }
+           else {
+               this.spawnObstacle();
+           }
+        }
+        else {
+            if(Math.random() <= .15) {
+                this.spawnPoseSpot();
+            }
+            else {
+                this.spawnObstacle();
+            }
+        }
+        this.objectTimer.delay = Math.floor((Math.random()) * (game.settings.spawnRate / 4) + game.settings.spawnRate * 0.875);
     }
 }

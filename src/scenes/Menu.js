@@ -33,10 +33,12 @@ class Menu extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(keySpace)) {
             // easy mode
             game.settings = {
-                scrollSpeed: 100,
+                scrollSpeed: 200,
+                startScroll: 200,
                 runwayWidth: 400,
                 numLanes: 4,
-                spawnRate: 3000, 
+                spawnRate: 3500,
+                startRate: 3500,
             }
             this.scene.start("playScene");    
         }

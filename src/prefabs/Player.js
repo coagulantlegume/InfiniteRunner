@@ -45,9 +45,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
         if(Math.abs(this.y - this.params.targetPos) > 0) { // if further than 1 pixel, keep moving
             if (game.settings.scrollSpeed < 600) {
-                this.body.velocity.y = (game.settings.scrollSpeed / 30) * (this.params.targetPos - this.y);
+                this.body.velocity.y = 10 * (this.params.targetPos - this.y);
+                //this.body.velocity.y = (game.settings.scrollSpeed / 30) * (this.params.targetPos - this.y);
             }
             else {
+                this.body.velocity.y = 10 * (this.params.targetPos - this.y);
                 this.body.velocity.y = (600 / 30) * (this.params.targetPos - this.y);
             }
         }

@@ -1,7 +1,7 @@
 let config = {
     type: Phaser.CANVAS,
-    width: 640,
-    height: 480,
+    width: 1280,
+    height: 600,
     scene: [Menu, Play, Gameover],
     physics: {
         default: 'arcade',
@@ -18,7 +18,7 @@ game.settings = {
     scrollSpeed: 100,
     runwayWidth: 400,
     numLanes: 4,
-    spawnRate: 3000,
+    spawnRate: 4000,
 }
 
 // reserve keyboard vars
