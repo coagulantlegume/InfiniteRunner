@@ -19,7 +19,8 @@ game.settings = {
     runwayWidth: 400,
     numLanes: 4,
     spawnRate: 2000,
-    distanceCounter : 0,
+    distanceCounter: 0,
+    runwaytopY: 50,
 }
 
 // reserve keyboard vars

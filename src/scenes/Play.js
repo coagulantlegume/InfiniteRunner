@@ -18,7 +18,7 @@ class Play extends Phaser.Scene {
 
         // set lane aspects
         game.settings.laneWidth = game.settings.runwayWidth / game.settings.numLanes; // set lane width for game
-        game.settings.pos0 = game.config.height / 2 - game.settings.runwayWidth / 2 + game.settings.laneWidth / 2; // set furthest left position
+        game.settings.pos0 = game.settings.runwaytopY + game.settings.laneWidth / 2; // set furthest up position
 
         // define keyboard keys
         Up = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
@@ -32,7 +32,7 @@ class Play extends Phaser.Scene {
         ];
         
         // draw runway
-        this.add.rectangle(0, game.config.height / 2, game.config.width, game.settings.runwayWidth, 0xFACADE).setOrigin(0,0.5);
+        this.add.rectangle(0, game.settings.runwaytopY, game.config.width, game.settings.runwayWidth, 0xFACADE).setOrigin(0,0);
 
         // create poseSpot group
         this.poseSpotGroup = this.add.group({
