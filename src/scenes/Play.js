@@ -50,7 +50,6 @@ class Play extends Phaser.Scene {
             callback: () => {
                 game.settings.distanceCounter += 0.5;
                 this.distanceCalc.delay = game.settings.scrollSpeed;
-                console.log(game.settings.distanceCounter);
             },
             loop: true,
         })
@@ -69,18 +68,46 @@ class Play extends Phaser.Scene {
             previousSpawn: true,
         };
 
-        // create speed bump timer
-        this.speedTimer = this.time.addEvent({
-            delay: 500,
+        // create stage timer
+        this.stageTimer = this.time.addEvent({
+            //delay: game.settings.stages.duration1,
             callback: () => {
-                if(game.settings.spawnRate > 200) {// cap at .2 second (after 95 seconds playtime)
-                    game.settings.spawnRate -= 7;
+                switch(game.settings.stages.currentStage) {
+                    case 1: // Switching from stage 1 to stage 2
+                        this.stageTimer.delay = game.settings.stages.duration2;
+                        game.settings.scrollSpeed = game.settings.stages.scrollSpeed2;
+                        game.settings.spawnRate = game.settings.stages.spawnRate2;
+                        game.settings.stages.currentStage += 1;
+                        console.log("Stage 2");
+                        break;
+                    case 2: // Switching from stage 2 to stage 3
+                        this.stageTimer.delay = game.settings.stages.duration3;
+                        game.settings.scrollSpeed = game.settings.stages.scrollSpeed3;
+                        game.settings.spawnRate = game.settings.stages.spawnRate3;
+                        console.log("Stage 3");
+                        break;
+                    default:
+                        console.log("Passed all stages. Somehow. Despite stage 3 being infinite.");
                 }
-                game.settings.scrollSpeed += .5;
+
+                // set current obstacle speeds
+                Phaser.Actions.Call(this.obstacleGroup.getChildren(), (obj) => {
+                    obj.setVelocityX(-game.settings.scrollSpeed);
+                }, this);
+
+                // set current pose spot speeds
+                Phaser.Actions.Call(this.poseSpotGroup.getChildren(), (obj) => {
+                    obj.setVelocityX(-game.settings.scrollSpeed);
+                }, this);
             },
             callbackScope: this,
-            loop: true
+            loop: true,
         })
+        // set stage 1 params
+        this.stageTimer.delay = game.settings.stages.duration1;
+        game.settings.scrollSpeed = game.settings.stages.scrollSpeed1;
+        game.settings.spawnRate = game.settings.stages.spawnRate1;
+        console.log("Stage 1");
 
         // create player
         this.player = new Player(this, 'player');

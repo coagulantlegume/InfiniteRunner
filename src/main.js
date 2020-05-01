@@ -21,6 +21,21 @@ game.settings = {
     spawnRate: 2000,
     distanceCounter: 0,
     runwaytopY: 50,
+    stages: {
+        currentStage: 1,
+        // Stage 1
+        scrollSpeed1: 200,
+        spawnRate1: 2000,
+        duration1: 10000,
+        // Stage 2
+        scrollSpeed2: 400,
+        spawnRate2: 1000,
+        duration2: 10000,
+        // Stage 3
+        scrollSpeed3: 600,
+        spawnRate3: 500,
+        duration3: 100000,
+    },
 }
 
 // reserve keyboard vars
