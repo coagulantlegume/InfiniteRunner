@@ -15,10 +15,11 @@ let game = new Phaser.Game(config);
 
 // define game settings
 game.settings = {
-    scrollSpeed: 100,
+    scrollSpeed: 200,
     runwayWidth: 400,
     numLanes: 4,
-    spawnRate: 4000,
+    spawnRate: 2000,
+    distanceCounter : 0,
 }
 
 // reserve keyboard vars

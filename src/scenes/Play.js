@@ -44,21 +44,16 @@ class Play extends Phaser.Scene {
             runChildUpdate: true,
         })
 
-        // create poseSpot timer
-        //this.poseSpotTimer = this.time.addEvent({
-        //    delay: 1000,
-        //    callback: this.spawnPoseSpot,
-        //    callbackScope: this,
-        //    loop: true
-        //});
-
-        // create obstacle timer
-        //this.obstacleTimer = this.time.addEvent({
-        //    delay: 3000,
-        //    callback: this.spawnObstacle,
-        //    callbackScope: this,
-        //    loop: true
-        //});
+        // create distance calculator
+        this.distanceCalc = this.time.addEvent({
+            delay: game.settings.scrollSpeed,
+            callback: () => {
+                game.settings.distanceCounter += 0.5;
+                this.distanceCalc.delay = game.settings.scrollSpeed;
+                console.log(game.settings.distanceCounter);
+            },
+            loop: true,
+        })
 
         // create object spawn timer
         this.objectTimer = this.time.addEvent({
@@ -67,13 +62,18 @@ class Play extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
+        // add pose spawn tracker
+        this.objectTimer.lastPoseSpot = {
+            location: -1,
+            lane: -1,
+            previousSpawn: true,
+        };
 
-        // create difficulty bump timer
-        this.difficultyTimer = this.time.addEvent({
+        // create speed bump timer
+        this.speedTimer = this.time.addEvent({
             delay: 500,
             callback: () => {
                 if(game.settings.spawnRate > 200) {// cap at .2 second (after 95 seconds playtime)
-                    console.log(game.settings.spawnRate);
                     game.settings.spawnRate -= 7;
                 }
                 game.settings.scrollSpeed += .5;
@@ -101,39 +101,44 @@ class Play extends Phaser.Scene {
         let posespot = new PoseSpot(this, 'poseSpot');
         //posespot.setCollisionDimensions(posespot.width, posespot.height / 2, 0, posespot.height / 2);
         this.poseSpotGroup.add(posespot);
-
-        // randomize timer for next call
-        //this.poseSpotTimer.delay = Math.floor((Math.random() + 1) * game.settings.spawnRate);
     }
 
     spawnObstacle() {
         let obstacle = new Obstacle(this, 'obstacle');
         this.obstacleGroup.add(obstacle);
-
-        // randomize timer for next call
-        //this.obstacleTimer.delay = Math.floor((Math.random() + 1) * game.settings.spawnRate);
     }
 
     spawnObjects() {
-        // calculate chance of spawning each type of object.
-        if (game.settings.spawnRate > 200) {// above minimal calculation
-           // begins game with 75% chance of spawning pose spot, caps at 15% chance of pose spot
-           if (Math.random() <= (game.settings.startRate / 200 * 1.25 - 
-               game.settings.startRate / game.settings.spawnRate) / 33.3) {
-               this.spawnPoseSpot();
-           }
-           else {
-               this.spawnObstacle();
-           }
+        // check distance from last posespot
+        if((game.settings.distanceCounter - this.objectTimer.lastPoseSpot.location) >= game.settings.scrollSpeed / 10) { // spawn posespot
+            this.spawnPoseSpot();
+            this.objectTimer.lastPoseSpot.location = game.settings.distanceCounter;
+            this.objectTimer.lastPoseSpot.previousSpawn = true;
         }
-        else {
-            if(Math.random() <= .15) {
-                this.spawnPoseSpot();
-            }
-            else {
-                this.spawnObstacle();
-            }
+        else { // spawn object
+            this.spawnObstacle();
+            this.objectTimer.lastPoseSpot.previousSpawn = false;
         }
-        this.objectTimer.delay = Math.floor((Math.random()) * (game.settings.spawnRate / 4) + game.settings.spawnRate * 0.875);
+
+        //if (game.settings.spawnRate > 200) {// above minimal calculation
+        //   // begins game with 75% chance of spawning pose spot, caps at 15% chance of pose spot
+        //   if (Math.random() <= (game.settings.startRate / 200 * 1.25 - 
+        //       game.settings.startRate / game.settings.spawnRate) / 33.3) {
+        //       this.spawnPoseSpot();
+        //   }
+        //   else {
+        //       this.spawnObstacle();
+        //   }
+        //}
+        //else {
+        //    if(Math.random() <= .15) {
+        //        this.spawnPoseSpot();
+        //    }
+        //    else {
+        //        this.spawnObstacle();
+        //    }
+        //}
+        // randomize timer for next call
+        this.objectTimer.delay = Math.floor((Math.random()) * (game.settings.spawnRate / 2) + game.settings.spawnRate * 0.5);
     }
 }
