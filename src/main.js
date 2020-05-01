@@ -24,17 +24,21 @@ game.settings = {
     stages: {
         currentStage: 1,
         // Stage 1
-        scrollSpeed1: 200,
+        scrollSpeed1: 300,
         spawnRate1: 2000,
-        duration1: 10000,
+        duration1: 20000,
         // Stage 2
         scrollSpeed2: 400,
-        spawnRate2: 1000,
-        duration2: 10000,
+        spawnRate2: 700,
+        duration2: 20000,
         // Stage 3
-        scrollSpeed3: 600,
+        scrollSpeed3: 550,
         spawnRate3: 500,
-        duration3: 100000,
+        duration3: 20000,
+        // Stage 4
+        scrollSpeed4: 700,
+        spawnRate4: 300,
+        duration4: 200000,
     },
 }
 

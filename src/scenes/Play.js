@@ -84,10 +84,17 @@ class Play extends Phaser.Scene {
                         this.stageTimer.delay = game.settings.stages.duration3;
                         game.settings.scrollSpeed = game.settings.stages.scrollSpeed3;
                         game.settings.spawnRate = game.settings.stages.spawnRate3;
+                        game.settings.stages.currentStage += 1;
                         console.log("Stage 3");
                         break;
+                    case 3: // Switching from stage 3 to stage 4
+                        this.stageTimer.delay = game.settings.stages.duration4;
+                        game.settings.scrollSpeed = game.settings.stages.scrollSpeed4;
+                        game.settings.spawnRate = game.settings.stages.spawnRate4;
+                        console.log("Stage 4");
+                        break;
                     default:
-                        console.log("Passed all stages. Somehow. Despite stage 3 being infinite.");
+                        console.log("Passed all stages. Somehow. Despite stage 4 being infinite.");
                 }
 
                 // set current obstacle speeds
@@ -137,7 +144,7 @@ class Play extends Phaser.Scene {
 
     spawnObjects() {
         // check distance from last posespot
-        if((game.settings.distanceCounter - this.objectTimer.lastPoseSpot.location) >= game.settings.scrollSpeed / 10) { // spawn posespot
+        if((game.settings.distanceCounter - this.objectTimer.lastPoseSpot.location) >= game.settings.scrollSpeed / 150) { // spawn posespot
             this.spawnPoseSpot();
             this.objectTimer.lastPoseSpot.location = game.settings.distanceCounter;
             this.objectTimer.lastPoseSpot.previousSpawn = true;
@@ -146,26 +153,6 @@ class Play extends Phaser.Scene {
             this.spawnObstacle();
             this.objectTimer.lastPoseSpot.previousSpawn = false;
         }
-
-        //if (game.settings.spawnRate > 200) {// above minimal calculation
-        //   // begins game with 75% chance of spawning pose spot, caps at 15% chance of pose spot
-        //   if (Math.random() <= (game.settings.startRate / 200 * 1.25 - 
-        //       game.settings.startRate / game.settings.spawnRate) / 33.3) {
-        //       this.spawnPoseSpot();
-        //   }
-        //   else {
-        //       this.spawnObstacle();
-        //   }
-        //}
-        //else {
-        //    if(Math.random() <= .15) {
-        //        this.spawnPoseSpot();
-        //    }
-        //    else {
-        //        this.spawnObstacle();
-        //    }
-        //}
-        // randomize timer for next call
         this.objectTimer.delay = Math.floor((Math.random()) * (game.settings.spawnRate / 2) + game.settings.spawnRate * 0.5);
     }
 }
