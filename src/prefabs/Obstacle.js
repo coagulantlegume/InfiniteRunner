@@ -50,9 +50,10 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
 
     check() {
         if(!this.params.hit) {
-            console.log("tripped!");
-            this.scene.player.tremble();
+            console.log("tripped!  swag: " + this.scene.player.params.swag);
+            this.scene.player.tripMove();
             this.params.hit = true;
+            this.scene.player.params.swag -= 25;
         }
     }
 }

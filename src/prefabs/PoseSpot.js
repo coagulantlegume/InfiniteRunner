@@ -36,7 +36,8 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
     update() {
         if(this.x < -this.width) {
             if(!this.params.complete) {
-                console.log("Missed!");
+                console.log("Missed!  swag: " + this.scene.player.params.swag);
+                this.scene.player.params.swag -= 15;
             }
 
             this.destroy();
@@ -59,9 +60,10 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
     check() {
         if(!this.params.complete && !this.attempted) { // if unattempted
             if (Phaser.Input.Keyboard.JustDown(this.params.poseKey)) { // if correct key pressed
+                console.log("Hit!  swag: " + this.scene.player.params.swag);
                 this.params.complete = true;
                 this.setDebugBodyColor(0xFFFFFF);
-                console.log("Hit!");
+                this.scene.player.params.swag += 20;
             }
         }
     }
