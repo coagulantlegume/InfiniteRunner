@@ -38,7 +38,7 @@ game.settings = {
         // Stage 4
         scrollSpeed4: 700,
         spawnRate4: 300,
-        duration4: 200000,
+        duration4: 20000,
     },
 }
 
