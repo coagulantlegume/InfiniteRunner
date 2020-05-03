@@ -75,41 +75,59 @@ class Play extends Phaser.Scene {
                 switch(game.settings.stages.currentStage) {
                     case 1: // Switching from stage 1 to stage 2
                         this.stageTimer.delay = game.settings.stages.duration2;
-                        game.settings.scrollSpeed = game.settings.stages.scrollSpeed2;
+                        this.stageTimer.newScrollSpeed = game.settings.stages.scrollSpeed2;
                         game.settings.spawnRate = game.settings.stages.spawnRate2;
-                        game.settings.stages.currentStage += 1;
                         console.log("Stage 2");
                         break;
                     case 2: // Switching from stage 2 to stage 3
                         this.stageTimer.delay = game.settings.stages.duration3;
-                        game.settings.scrollSpeed = game.settings.stages.scrollSpeed3;
+                        this.stageTimer.newScrollSpeed = game.settings.stages.scrollSpeed3;
                         game.settings.spawnRate = game.settings.stages.spawnRate3;
-                        game.settings.stages.currentStage += 1;
                         console.log("Stage 3");
                         break;
                     case 3: // Switching from stage 3 to stage 4
                         this.stageTimer.delay = game.settings.stages.duration4;
-                        game.settings.scrollSpeed = game.settings.stages.scrollSpeed4;
+                        this.stageTimer.newScrollSpeed = game.settings.stages.scrollSpeed4;
                         game.settings.spawnRate = game.settings.stages.spawnRate4;
                         console.log("Stage 4");
                         break;
                     default:
-                        console.log("Passed all stages. Somehow. Despite stage 4 being infinite.");
+                        this.stageTimer.newScrollSpeed += 50;
+                        game.settings.spawnRate -= 15;
+                        console.log("Difficulty bump");
                 }
+                game.settings.stages.currentStage += 1;
+                this.stageTimer.pause = true;
 
-                // set current obstacle speeds
-                Phaser.Actions.Call(this.obstacleGroup.getChildren(), (obj) => {
-                    obj.setVelocityX(-game.settings.scrollSpeed);
-                }, this);
+                // slowly ramp up speed, +50 per second, calculated every .5 seconds
+                this.stageTimer.rampTimer = this.time.addEvent({
+                    delay: 500,
+                    callback: () => {
+                        game.settings.scrollSpeed += 25;
+                        // check if new stage speed met or exceeded
+                        if(game.settings.scrollSpeed >= this.stageTimer.newScrollSpeed) {
+                            game.settings.scrollSpeed = this.stageTimer.newScrollSpeed;
+                            this.stageTimer.pause = false;
+                            this.stageTimer.rampTimer.reset();
+                            this.stageTimer.rampTimer.pause = true;
+                        }
+                        // set current obstacle speeds
+                        Phaser.Actions.Call(this.obstacleGroup.getChildren(), (obj) => {
+                            obj.setVelocityX(-game.settings.scrollSpeed);
+                        }, this);
 
-                // set current pose spot speeds
-                Phaser.Actions.Call(this.poseSpotGroup.getChildren(), (obj) => {
-                    obj.setVelocityX(-game.settings.scrollSpeed);
-                }, this);
+                        // set current pose spot speeds
+                        Phaser.Actions.Call(this.poseSpotGroup.getChildren(), (obj) => {
+                            obj.setVelocityX(-game.settings.scrollSpeed);
+                        }, this);
+                    },
+                    callbackScope: this,
+                    loop: true,
+                })
             },
             callbackScope: this,
             loop: true,
-        })
+        });
         // set stage 1 params
         this.stageTimer.delay = game.settings.stages.duration1;
         game.settings.scrollSpeed = game.settings.stages.scrollSpeed1;
