@@ -27,7 +27,11 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
 
         // set debug color
         this.setDebugBodyColor(0xFF0000);
+
+        //audio for hitting obstacles
+        this.gasp = scene.sound.add('gasp')
     }
+
     
     update() {
         if(this.x < -this.width) {
@@ -50,6 +54,7 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
 
     check() {
         if(!this.params.hit) {
+            this.gasp.play();
             console.log("tripped!  swag: " + this.scene.player.params.swag);
             this.scene.player.tripMove();
             this.params.hit = true;

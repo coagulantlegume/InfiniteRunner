@@ -31,11 +31,16 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
 
         // debug color green
         this.setDebugBodyColor(0x00FF00);
+
+        //audio for posing and missing pose spots 
+        this.boo = scene.sound.add('boo');
+        this.posesfx = scene.sound.add(Phaser.Math.RND.pick(['posesfx1', 'posesfx2', 'posesfx3']));
     }
-    
+
     update() {
         if(this.x < -this.width) {
             if(!this.params.complete) {
+                this.boo.play();
                 console.log("Missed!  swag: " + this.scene.player.params.swag);
                 this.scene.player.params.swag -= 15;
             }
@@ -60,6 +65,7 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
     check() {
         if(!this.params.complete && !this.attempted) { // if unattempted
             if (Phaser.Input.Keyboard.JustDown(this.params.poseKey)) { // if correct key pressed
+                this.posesfx.play();
                 console.log("Hit!  swag: " + this.scene.player.params.swag);
                 this.params.complete = true;
                 this.setDebugBodyColor(0xFFFFFF);
