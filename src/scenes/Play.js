@@ -46,10 +46,10 @@ class Play extends Phaser.Scene {
 
         // create distance calculator
         this.distanceCalc = this.time.addEvent({
-            delay: game.settings.scrollSpeed,
+            delay: 2 * game.settings.scrollSpeed,
             callback: () => {
-                game.settings.distanceCounter += 0.5;
-                this.distanceCalc.delay = game.settings.scrollSpeed;
+                game.settings.distanceCounter += 1;
+                this.distanceCalc.delay = 2 * game.settings.scrollSpeed;
             },
             loop: true,
         })
@@ -76,18 +76,21 @@ class Play extends Phaser.Scene {
                     case 1: // Switching from stage 1 to stage 2
                         this.stageTimer.delay = game.settings.stages.duration2;
                         this.stageTimer.newScrollSpeed = game.settings.stages.scrollSpeed2;
+                        game.settings.poseDist = game.settings.stages.poseDist2;
                         game.settings.spawnRate = game.settings.stages.spawnRate2;
                         console.log("Stage 2");
                         break;
                     case 2: // Switching from stage 2 to stage 3
                         this.stageTimer.delay = game.settings.stages.duration3;
                         this.stageTimer.newScrollSpeed = game.settings.stages.scrollSpeed3;
+                        game.settings.poseDist = game.settings.stages.poseDist3;
                         game.settings.spawnRate = game.settings.stages.spawnRate3;
                         console.log("Stage 3");
                         break;
                     case 3: // Switching from stage 3 to stage 4
                         this.stageTimer.delay = game.settings.stages.duration4;
                         this.stageTimer.newScrollSpeed = game.settings.stages.scrollSpeed4;
+                        game.settings.poseDist = game.settings.stages.poseDist4;
                         game.settings.spawnRate = game.settings.stages.spawnRate4;
                         console.log("Stage 4");
                         break;
@@ -131,6 +134,7 @@ class Play extends Phaser.Scene {
         // set stage 1 params
         this.stageTimer.delay = game.settings.stages.duration1;
         game.settings.scrollSpeed = game.settings.stages.scrollSpeed1;
+        game.settings.poseDist = game.settings.stages.poseDist1;
         game.settings.spawnRate = game.settings.stages.spawnRate1;
         console.log("Stage 1");
 
@@ -162,7 +166,7 @@ class Play extends Phaser.Scene {
 
     spawnObjects() {
         // check distance from last posespot
-        if((game.settings.distanceCounter - this.objectTimer.lastPoseSpot.location) >= game.settings.scrollSpeed / 150) { // spawn posespot
+        if((game.settings.distanceCounter - this.objectTimer.lastPoseSpot.location) >= game.settings.poseDist) { // spawn posespot
             this.spawnPoseSpot();
             this.objectTimer.lastPoseSpot.location = game.settings.distanceCounter;
             this.objectTimer.lastPoseSpot.previousSpawn = true;
