@@ -35,7 +35,7 @@ class Menu extends Phaser.Scene {
         this.runway = this.add.tileSprite(centerX, centerY + 300, 726, 1280, 'runway').setOrigin(0.5);
         this.titlepose = this.add.tileSprite(centerX, centerY + 50, 100, 200, 'titlepose').setOrigin(0.5);
         this.add.rectangle(centerX, centerY + 220, 550, 60, 0x000000).setOrigin(0.5);
-        this.startText = this.add.bitmapText(centerX, centerY + 50, 'titlefont', 'Supermodel', 72).setOrigin(0.5);
+        this.startText = this.add.bitmapText(centerX, centerY + 50, 'titlefont', 'Superstar', 72).setOrigin(0.5);
         this.startText = this.add.bitmapText(centerX, centerY + 225, 'myfont', 'Press Space to Start', 30).setOrigin(0.5);
     }
 
