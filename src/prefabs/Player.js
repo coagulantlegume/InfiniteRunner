@@ -31,7 +31,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.swagLossTimer = this.scene.time.addEvent({
             delay: 500,
             callback: () => {
-                this.params.swag -= .5;
+                this.params.swag = Math.max(this.params.swag - 0.5, 0);
             },
             callbackScope: this,
             loop: true
@@ -39,11 +39,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
     
     update() {
-        // cap swag at 100
-        if(this.params.swag > 100) {
-            this.params.swag = 100;
-        }
-
         // calculate keystroke
         if(Phaser.Input.Keyboard.JustDown(Up) && 
            this.params.targetPosY > game.settings.pos0 + 1

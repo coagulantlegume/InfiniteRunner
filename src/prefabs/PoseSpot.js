@@ -10,6 +10,7 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
             complete: false, // tracking if player has posed on spot or not
             attempted: false, // if attempted before, could be changed to int for multiple attempts
             poseKey: poseKeys[poseNum], // which key to satisfy pose
+            pose: poseNum,
         };
 
         // calculate position
@@ -70,7 +71,8 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
                 console.log("Hit!  swag: " + this.scene.player.params.swag);
                 this.params.complete = true;
                 this.setDebugBodyColor(0xFFFFFF);
-                this.scene.player.params.swag += 20;
+                this.scene.player.params.swag = Math.min(this.scene.player.params.swag + 20, 100);
+                this.scene.player.params.lastPose = this.params.pose;
             }
         }
     }

@@ -22,7 +22,7 @@ game.settings = {
     poseDist: 0,
     distanceCounter: 0,
     runwaytopY: 102,
-    playerXpos: 150,
+    playerXpos: 200,
     stages: {
         currentStage: 1,
         // Stage 1

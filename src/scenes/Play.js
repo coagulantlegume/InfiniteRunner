@@ -11,6 +11,8 @@ class Play extends Phaser.Scene {
         this.load.image('obBag', './assets/obstacleBag.png');
         this.load.image('obShoes', './assets/obstacleShoes.png');
         this.load.image('background', './assets/tiledBG.png');
+        this.load.image('backgroundSideCover', './assets/backgroundSideCover.png');
+        this.load.spritesheet('swagBar', './assets/swagBar.png', {frameWidth: 16, frameHeight: 16});
         this.load.audio('bgm', './assets/funkymusic.wav');
     }
 
@@ -36,6 +38,14 @@ class Play extends Phaser.Scene {
         
         // draw runway
         this.background = this.add.tileSprite(0, 0, 1280, 600, 'background').setOrigin(0, 0);
+
+        // draw swagbar base
+        this.add.image(0,0,'backgroundSideCover').setOrigin(0,0).setDepth(2);
+        this.add.sprite(85, game.config.height - 20, 'swagBar').setOrigin(0, 1).setScale(5, 32).setFrame(4).setDepth(2).angle = -6.4;
+
+        // draw swagbar full
+        this.swagBar = this.add.sprite(85, game.config.height - 20, 'swagBar');
+        this.swagBar.setOrigin(0, 1).setScale(5, 32).setFrame(5).setDepth(3).angle = -6.4;
 
         // create poseSpot group
         this.poseSpotGroup = this.add.group({
@@ -171,6 +181,14 @@ class Play extends Phaser.Scene {
     update() {
         // scroll background
         this.background.tilePositionX += game.settings.scrollSpeed / 60;
+
+        // update swag bar
+        console.log(this.swagBar);
+        this.swagBar.setScale(5, this.player.params.swag / 100 * 32);
+        if(this.player.params.lastPose != undefined) {
+            this.swagBar.setFrame(this.player.params.lastPose);
+        }
+
         // check if game end
         if(this.player.params.swag > 0) {
             this.player.update();

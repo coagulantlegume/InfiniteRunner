@@ -58,7 +58,7 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
             console.log("tripped!  swag: " + this.scene.player.params.swag);
             this.scene.player.tripMove();
             this.params.hit = true;
-            this.scene.player.params.swag -= 25;
+            this.scene.player.params.swag = Math.max(this.scene.player.params.swag - 25, 0);
         }
     }
 }
