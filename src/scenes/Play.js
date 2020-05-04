@@ -150,7 +150,27 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        this.player.update();
+        if(this.player.params.swag > 0) {
+            this.player.update();
+        }
+        else if (game.settings.scrollSpeed > 0) {
+            game.settings.scrollSpeed -= 5;
+            if (game.settings.scrollSpeed < 0) {
+                game.settings.scrollSpeed = 0;
+            }
+            // set current obstacle speeds
+            Phaser.Actions.Call(this.obstacleGroup.getChildren(), (obj) => {
+                obj.setVelocityX(-game.settings.scrollSpeed);
+            }, this);
+
+            // set current pose spot speeds
+            Phaser.Actions.Call(this.poseSpotGroup.getChildren(), (obj) => {
+                obj.setVelocityX(-game.settings.scrollSpeed);
+            }, this);
+        }
+        else {
+            this.scene.start("gameoverScene");
+        }
     }
 
     spawnPoseSpot() {
