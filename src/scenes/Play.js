@@ -13,6 +13,7 @@ class Play extends Phaser.Scene {
         this.load.image('background', './assets/tiledBG.png');
         this.load.image('backgroundSideCover', './assets/backgroundSideCover.png');
         this.load.spritesheet('swagBar', './assets/swagBar.png', {frameWidth: 48, frameHeight: 48});
+        this.load.spritesheet('swagText', './assets/swagText.png', {frameWidth: 122, frameHeight: 64});
         this.load.audio('bgm', './assets/funkymusic.wav');
     }
 
@@ -46,16 +47,18 @@ class Play extends Phaser.Scene {
         // draw swagbar full
         this.swagBar = this.add.sprite(87, game.config.height - 18, 'swagBar');
         this.swagBar.setOrigin(0, 1).setScale(1.7, 10).setFrame(5).setDepth(3).angle = -6.4;
+        this.swagText = this.add.sprite(172, game.config.height - 24, 'swagText')
+        this.swagText.setOrigin(0, 1).setFrame(4).setDepth(3).angle = -6.4;
 
         // create poseSpot group
         this.poseSpotGroup = this.add.group({
             runChildUpdate: true,
-        })
+        });
 
-        // create obstacle groupz
+        // create obstacle group
         this.obstacleGroup = this.add.group({
             runChildUpdate: true,
-        })
+        });
 
         // create distance calculator
         this.distanceCalc = this.time.addEvent({
@@ -65,7 +68,7 @@ class Play extends Phaser.Scene {
                 this.distanceCalc.delay = 2 * game.settings.scrollSpeed;
             },
             loop: true,
-        })
+        });
 
         // create object spawn timer
         this.objectTimer = this.time.addEvent({
@@ -187,6 +190,7 @@ class Play extends Phaser.Scene {
         this.swagBar.setScale(1.7, this.player.params.swag / 10);
         if(this.player.params.lastPose != undefined) {
             this.swagBar.setFrame(this.player.params.lastPose);
+            this.swagText.setFrame(this.player.params.lastPose);
         }
 
         // check if game end
