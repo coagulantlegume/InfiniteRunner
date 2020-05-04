@@ -1,3 +1,13 @@
+/*
+    SUPERSTAR
+    5/4/2020
+    Collaborators:
+       - Alec Wolf
+       - Daniel Liao
+       - Nathan Huynh
+    Creative Tilt:
+    
+*/
 let config = {
     type: Phaser.CANVAS,
     width: 1280,
