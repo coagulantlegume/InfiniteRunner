@@ -37,10 +37,23 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
         //audio for posing and missing pose spots 
         this.boo = scene.sound.add('boo');
         this.posesfx = scene.sound.add(Phaser.Math.RND.pick(['posesfx1', 'posesfx2', 'posesfx3']));
+
+        // get player width for calculating when pose spot has passed and should be destroyed
+        this.playerWidth = scene.player.width;
     }
 
     update() {
-        if(this.x < -this.width) {
+        // if(this.x < -this.width) {
+        //     if(!this.params.complete) {
+        //         this.boo.setVolume(0.05);
+        //         this.boo.play();
+        //         this.scene.player.params.swag -= 15;
+        //         this.scene.player.params.currentCombo = 0;
+        //     }
+
+        //     this.destroy();
+        // }
+        if(this.x < game.settings.playerXpos - this.playerWidth * 1.1) {
             if(!this.params.complete) {
                 this.boo.setVolume(0.05);
                 this.boo.play();
