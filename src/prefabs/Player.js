@@ -9,6 +9,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             lastPose: undefined,
             targetPosY: game.settings.pos0,
             isMoving: false,
+            currentCombo: 0,
         }
         this.depth = 1;
 
@@ -108,7 +109,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     tripMove() {
-        this.x -= game.settings.scrollSpeed / 30;
+        this.x -= 20;
         this.setDebugBodyColor(0xFF0000);
         this.tripTimer = this.scene.time.addEvent({
             delay: 200,

@@ -42,13 +42,17 @@ class Play extends Phaser.Scene {
 
         // draw swagbar base
         this.add.image(0,0,'backgroundSideCover').setOrigin(0,0).setDepth(2);
-        this.add.sprite(87, game.config.height - 18, 'swagBar').setOrigin(0, 1).setScale(1.7, 10.5).setFrame(4).setDepth(2).angle = -6.4;
+        this.add.sprite(87, game.config.height - 18, 'swagBar').setOrigin(0, 1).setScale(1.7, 10).setFrame(4).setDepth(2).angle = -6.4;
 
         // draw swagbar full
         this.swagBar = this.add.sprite(87, game.config.height - 18, 'swagBar');
         this.swagBar.setOrigin(0, 1).setScale(1.7, 10).setFrame(5).setDepth(3).angle = -6.4;
         this.swagText = this.add.sprite(172, game.config.height - 24, 'swagText')
         this.swagText.setOrigin(0, 1).setFrame(4).setDepth(3).angle = -6.4;
+
+        // draw combo text 
+        this.comboText = this.add.bitmapText(25, game.config.height - 20, 'myfont', '', 50);
+        this.comboText.setOrigin(0,1).setDepth(3).angle = -6.4;
 
         // create poseSpot group
         this.poseSpotGroup = this.add.group({
@@ -186,11 +190,16 @@ class Play extends Phaser.Scene {
         this.background.tilePositionX += game.settings.scrollSpeed / 60;
 
         // update swag bar
-        console.log(this.swagBar);
         this.swagBar.setScale(1.7, this.player.params.swag / 10);
         if(this.player.params.lastPose != undefined) {
             this.swagBar.setFrame(this.player.params.lastPose);
             this.swagText.setFrame(this.player.params.lastPose);
+        }
+        if(this.player.params.currentCombo > 0) {
+            this.comboText.setText(this.player.params.currentCombo + 'x');
+        }
+        else {
+            this.comboText.setText('');
         }
 
         // check if game end
