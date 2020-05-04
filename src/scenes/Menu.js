@@ -8,6 +8,11 @@ class Menu extends Phaser.Scene {
         this.load.bitmapFont('titlefont', 'assets/fonts/titlefont.png', 'assets/fonts/titlefont.fnt');
         this.load.image('runway', './assets/runway.png');
         this.load.image('titlepose', './assets/titlepose.png');
+        this.load.audio('boo', './assets/boo.wav');
+        this.load.audio('posesfx1', './assets/posesfx1.wav');
+        this.load.audio('posesfx2', './assets/posesfx2.wav');
+        this.load.audio('posesfx3', './assets/posesfx3.wav');
+        this.load.audio('gasp', './assets/gasp.wav');
     }
 
     create(){
