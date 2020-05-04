@@ -1,3 +1,20 @@
+/*
+    SUPERSTAR
+    5/4/2020
+    Collaborators:
+       - Alec Wolf
+       - Daniel Liao
+       - Nathan Huynh
+    Creative Tilt:
+        We used timed key presses to represent poses which are being struck at different points
+    across a runway that the character walks which is similar to beatmap games but in a way
+    we haven't seen before in an endless runner. For our color scheme we decided to stick to
+    a clean, minimalist aesthetic with pops of bold colors on a grayscale backdrop. As far as
+    programming techniques, we tried to organize our code in a way that we could manipulate
+    large parts of the layout and mechanics on the fly from game settings in this main.js file.
+    For example the number of lanes, width of the runway, position of the runway, and x position
+    of the player can be changed in the settings and propegate to the rest of the game.
+*/
 let config = {
     type: Phaser.CANVAS,
     width: 1280,
