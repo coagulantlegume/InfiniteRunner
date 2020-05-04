@@ -6,10 +6,10 @@ class Play extends Phaser.Scene {
     preload() {
         this.load.spritesheet('poseSpot', './assets/temp_posespot.png', {frameWidth: 32,
                 frameHeight: 32});
-        this.load.image('player', './assets/player.png');
+        this.load.atlas('player', './assets/playerAnimation.png', './assets/playerAnimation.json');
         this.load.image('obstacle', './assets/obstacle.png');
         this.load.audio('bgm', './assets/funkymusic.wav');
-    }
+    }ch
 
     create() {
         this.music = this.sound.play('bgm', {
@@ -39,7 +39,7 @@ class Play extends Phaser.Scene {
             runChildUpdate: true,
         })
 
-        // create obstacle group
+        // create obstacle groupz
         this.obstacleGroup = this.add.group({
             runChildUpdate: true,
         })
@@ -138,8 +138,22 @@ class Play extends Phaser.Scene {
         game.settings.spawnRate = game.settings.stages.spawnRate1;
         console.log("Stage 1");
 
-        // create player
-        this.player = new Player(this, 'player');
+        // create player 
+           // set walk animation
+        this.anims.create({
+            key: 'walk',
+            repeat: -1,
+            frameRate: 14,
+            frames: this.anims.generateFrameNames('player', {
+                prefix: 'f',
+                suffix: '.png',
+                start: 1,
+                end: 12,
+                zeroPad: 2
+            })
+        }) 
+           // create player object
+        this.player = new Player(this);
 
         // create player/posespot overlap event
         this.physics.world.on('overlap', (body1, body2) => {

@@ -10,6 +10,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             targetPosY: game.settings.pos0,
             isMoving: false,
         }
+
+        // set walking animations
+        this.anims.load('walk');
+        this.play('walk')
     
         // add to scene and physics
         scene.add.existing(this);
