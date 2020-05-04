@@ -20,7 +20,8 @@ class Play extends Phaser.Scene {
 
     create() {
         this.music = this.sound.play('bgm', {
-            loop: true
+            loop: true,
+            volume: 0.1
         });
 
         // set lane aspects
@@ -59,8 +60,8 @@ class Play extends Phaser.Scene {
         this.comboText.setOrigin(0,1).setDepth(3).angle = -6.4;
 
         // draw distance travelled text
-        // this.distString = game.settings.distanceCounter;
-        // this.distText = this.add.bitmapText(game.config.width/2, 25, 'myfont', this.distString, 35).setOrigin(0.5,0);
+        this.distString = game.settings.distanceCounter;
+        this.distText = this.add.bitmapText(game.config.width/2, 25, 'myfont', this.distString, 35).setOrigin(0.5,0);
 
         // create poseSpot group
         this.poseSpotGroup = this.add.group({
