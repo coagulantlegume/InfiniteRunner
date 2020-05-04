@@ -6,7 +6,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true, // show bounding boxes
+            debug: false, // show bounding boxes
         }
     }
 };
