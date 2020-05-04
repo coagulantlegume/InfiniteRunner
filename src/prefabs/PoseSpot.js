@@ -53,7 +53,7 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
 
         //     this.destroy();
         // }
-        if(this.x < game.settings.playerXpos - this.playerWidth * 1.1) {
+        if(this.x < game.settings.playerXpos - this.playerWidth * 1.5) {
             if(!this.params.complete) {
                 this.boo.setVolume(0.05);
                 this.boo.play();
