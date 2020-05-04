@@ -10,10 +10,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             targetPosY: game.settings.pos0,
             isMoving: false,
         }
+        this.depth = 1;
 
         // set walking animations
         this.anims.load('walk');
-        this.play('walk')
+        this.play('walk');
     
         // add to scene and physics
         scene.add.existing(this);
@@ -48,13 +49,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
            this.params.targetPosY > game.settings.pos0 + 1
            && !this.params.isMoving) {
             this.params.targetPosY -= game.settings.laneWidth;
-            this.depth -= 1;
         }
         if(Phaser.Input.Keyboard.JustDown(Down) &&
            this.params.targetPosY < game.settings.pos0 + game.settings.laneWidth * (game.settings.numLanes - 1) && 
            !this.params.isMoving) {
             this.params.targetPosY += game.settings.laneWidth;
-            this.depth += 1;
         }
         
         // calculate movement Y
@@ -114,7 +113,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     tripMove() {
-        this.x -= game.settings.scrollSpeed / 50;
+        this.x -= game.settings.scrollSpeed / 30;
         this.setDebugBodyColor(0xFF0000);
         this.tripTimer = this.scene.time.addEvent({
             delay: 200,

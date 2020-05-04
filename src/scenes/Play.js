@@ -4,12 +4,13 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.spritesheet('poseSpot', './assets/temp_posespot.png', {frameWidth: 32,
-                frameHeight: 32});
+        this.load.spritesheet('poseSpot', './assets/poseSpot.png', {frameWidth: 57,
+                frameHeight: 57});
         this.load.atlas('player', './assets/playerAnimation.png', './assets/playerAnimation.json');
         this.load.image('obstacle', './assets/obstacle.png');
+        this.load.image('background', './assets/tiledBG.png');
         this.load.audio('bgm', './assets/funkymusic.wav');
-    }ch
+    }
 
     create() {
         this.music = this.sound.play('bgm', {
@@ -32,7 +33,7 @@ class Play extends Phaser.Scene {
         ];
         
         // draw runway
-        this.add.rectangle(0, game.settings.runwaytopY, game.config.width, game.settings.runwayWidth, 0xFACADE).setOrigin(0,0);
+        this.background = this.add.tileSprite(0, 0, 1280, 600, 'background').setOrigin(0, 0);
 
         // create poseSpot group
         this.poseSpotGroup = this.add.group({
@@ -48,7 +49,7 @@ class Play extends Phaser.Scene {
         this.distanceCalc = this.time.addEvent({
             delay: 2 * game.settings.scrollSpeed,
             callback: () => {
-                game.settings.distanceCounter += 1;
+                game.settings.distanceCounter += .5;
                 this.distanceCalc.delay = 2 * game.settings.scrollSpeed;
             },
             loop: true,
@@ -154,6 +155,8 @@ class Play extends Phaser.Scene {
         }) 
            // create player object
         this.player = new Player(this);
+        this.player.setOrigin(0.85,0.85);
+        this.player.setCollisionDimensions(this.player.width * 0.9, this.player.height / 3, 0, this.player.height / 3 * 2);
 
         // create player/posespot overlap event
         this.physics.world.on('overlap', (body1, body2) => {
@@ -164,6 +167,9 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        // scroll background
+        this.background.tilePositionX += game.settings.scrollSpeed / 60;
+        // check if game end
         if(this.player.params.swag > 0) {
             this.player.update();
         }
