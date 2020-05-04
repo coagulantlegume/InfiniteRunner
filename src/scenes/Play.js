@@ -49,7 +49,7 @@ class Play extends Phaser.Scene {
         this.distanceCalc = this.time.addEvent({
             delay: 2 * game.settings.scrollSpeed,
             callback: () => {
-                game.settings.distanceCounter += 1;
+                game.settings.distanceCounter += .5;
                 this.distanceCalc.delay = 2 * game.settings.scrollSpeed;
             },
             loop: true,
