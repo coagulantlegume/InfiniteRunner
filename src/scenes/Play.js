@@ -58,6 +58,10 @@ class Play extends Phaser.Scene {
         this.comboText = this.add.bitmapText(25, game.config.height - 20, 'myfont', '', 50);
         this.comboText.setOrigin(0,1).setDepth(3).angle = -6.4;
 
+        // draw distance travelled text
+        // this.distString = game.settings.distanceCounter;
+        // this.distText = this.add.bitmapText(game.config.width/2, 25, 'myfont', this.distString, 35).setOrigin(0.5,0);
+
         // create poseSpot group
         this.poseSpotGroup = this.add.group({
             runChildUpdate: true,

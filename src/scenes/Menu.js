@@ -7,6 +7,7 @@ class Menu extends Phaser.Scene {
         this.load.bitmapFont('myfont', 'assets/fonts/odetogaming.png', 'assets/fonts/odetogaming.fnt');
         this.load.bitmapFont('titlefont', 'assets/fonts/titlefont.png', 'assets/fonts/titlefont.fnt');
         this.load.image('title', './assets/titleScreen.png');
+        this.load.image('guide', './assets/instructions.png');
         this.load.image('titlepose', './assets/titlepose.png');
         this.load.audio('boo', './assets/boo.wav');
         this.load.audio('posesfx1', './assets/posesfx1.wav');
@@ -54,8 +55,12 @@ class Menu extends Phaser.Scene {
             //    spawnRate: 3500,
             //    
             //}
-            this.scene.start("playScene");    
+            //this.guide = this.add.tileSprite(0, 0, 1280, 600, 'guide').setOrigin(0);
+            this.scene.start("playScene");
         }
+        // if(Phaser.Input.Keyboard.JustDown(keySpace)){
+        //     this.scene.start("playScene");   
+        // }
     }
     
 }
