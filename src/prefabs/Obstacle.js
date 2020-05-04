@@ -55,10 +55,10 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
     check() {
         if(!this.params.hit) {
             this.gasp.play();
-            console.log("tripped!  swag: " + this.scene.player.params.swag);
             this.scene.player.tripMove();
             this.params.hit = true;
             this.scene.player.params.swag = Math.max(this.scene.player.params.swag - 25, 0);
+            this.scene.player.params.currentCombo = 0;
         }
     }
 }
