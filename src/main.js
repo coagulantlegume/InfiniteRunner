@@ -2,7 +2,7 @@ let config = {
     type: Phaser.CANVAS,
     width: 1280,
     height: 600,
-    scene: [Menu, Play, Gameover],
+    scene: [Menu, Guide, Play, Gameover],
     physics: {
         default: 'arcade',
         arcade: {
@@ -49,4 +49,4 @@ game.settings = {
 }
 
 // reserve keyboard vars
-let Up, Down, poseKeys, keySpace;                     
+let Up, Down, poseKeys, keySpace, keyEnter;                     

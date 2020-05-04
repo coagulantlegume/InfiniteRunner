@@ -55,12 +55,9 @@ class Menu extends Phaser.Scene {
             //    spawnRate: 3500,
             //    
             //}
-            //this.guide = this.add.tileSprite(0, 0, 1280, 600, 'guide').setOrigin(0);
-            this.scene.start("playScene");
+            //this.scene.start("playScene");
+            this.scene.start("guideScene");
         }
-        // if(Phaser.Input.Keyboard.JustDown(keySpace)){
-        //     this.scene.start("playScene");   
-        // }
     }
     
 }
