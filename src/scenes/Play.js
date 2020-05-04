@@ -60,7 +60,7 @@ class Play extends Phaser.Scene {
         this.comboText.setOrigin(0,1).setDepth(3).angle = -6.4;
 
         // draw distance travelled text
-        this.distString = game.settings.distanceCounter;
+        this.distString = game.settings.distanceCounter+'m';
         this.distText = this.add.bitmapText(game.config.width/2, 25, 'myfont', this.distString, 35).setOrigin(0.5,0);
 
         // create poseSpot group
@@ -210,6 +210,9 @@ class Play extends Phaser.Scene {
         else {
             this.comboText.setText('');
         }
+
+        // set distance travelled text
+        this.distText.setText(Phaser.Math.FloorTo(game.settings.distanceCounter)+'m');
 
         // check if game end
         if(this.player.params.swag > 0) {
