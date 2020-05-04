@@ -25,6 +25,7 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
         // set physics aspects
         this.setVelocityX(-game.settings.scrollSpeed);
         this.setImmovable();
+        this.body.setCircle(this.width / 2);
 
         // set texture
         this.setFrame(poseNum);

@@ -16,12 +16,12 @@ let game = new Phaser.Game(config);
 // define game settings
 game.settings = {
     scrollSpeed: 0,
-    runwayWidth: 400,
+    runwayWidth: 345,
     numLanes: 4,
     spawnRate: 0,
     poseDist: 0,
     distanceCounter: 0,
-    runwaytopY: 50,
+    runwaytopY: 102,
     playerXpos: 75,
     stages: {
         currentStage: 1,
