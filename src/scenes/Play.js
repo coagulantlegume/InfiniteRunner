@@ -7,7 +7,9 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('poseSpot', './assets/poseSpot.png', {frameWidth: 57,
                 frameHeight: 57});
         this.load.atlas('player', './assets/playerAnimation.png', './assets/playerAnimation.json');
-        this.load.image('obstacle', './assets/obstacle.png');
+        this.load.image('obMask', './assets/obstacleMask.png');
+        this.load.image('obBag', './assets/obstacleBag.png');
+        this.load.image('obShoes', './assets/obstacleShoes.png');
         this.load.image('background', './assets/tiledBG.png');
         this.load.audio('bgm', './assets/funkymusic.wav');
     }
@@ -200,7 +202,7 @@ class Play extends Phaser.Scene {
     }
 
     spawnObstacle() {
-        let obstacle = new Obstacle(this, 'obstacle');
+        let obstacle = new Obstacle(this, Phaser.Math.RND.pick(['obMask', 'obBag', 'obShoes']));
         this.obstacleGroup.add(obstacle);
     }
 
