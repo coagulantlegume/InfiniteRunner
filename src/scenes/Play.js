@@ -12,6 +12,7 @@ class Play extends Phaser.Scene {
         this.load.image('obShoes', './assets/obstacleShoes.png');
         this.load.image('background', './assets/tiledBG.png');
         this.load.image('backgroundSideCover', './assets/backgroundSideCover.png');
+        this.load.image('hotbar', './assets/posesUI.png');
         this.load.spritesheet('swagBar', './assets/swagBar.png', {frameWidth: 48, frameHeight: 48});
         this.load.spritesheet('swagText', './assets/swagText.png', {frameWidth: 122, frameHeight: 64});
         this.load.audio('bgm', './assets/funkymusic.wav');
@@ -49,6 +50,9 @@ class Play extends Phaser.Scene {
         this.swagBar.setOrigin(0, 1).setScale(1.7, 10).setFrame(5).setDepth(3).angle = -6.4;
         this.swagText = this.add.sprite(172, game.config.height - 24, 'swagText')
         this.swagText.setOrigin(0, 1).setFrame(4).setDepth(3).angle = -6.4;
+
+        // draw hotbar
+        this.hotbar = this.add.sprite(game.config.width/2, game.config.height-80, 'hotbar').setDepth(2);
 
         // draw combo text 
         this.comboText = this.add.bitmapText(25, game.config.height - 20, 'myfont', '', 50);
