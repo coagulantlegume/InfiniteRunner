@@ -220,6 +220,7 @@ class Play extends Phaser.Scene {
             this.player.update();
         }
         else if (game.settings.scrollSpeed > 0) {
+            this.distanceCalc.paused = true;
             this.player.setVelocity(0,0);
             this.music.volume /= 2;
             game.settings.scrollSpeed -= 5;
