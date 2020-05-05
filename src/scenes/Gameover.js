@@ -56,6 +56,8 @@ class Gameover extends Phaser.Scene {
 
     update(){
         if (Phaser.Input.Keyboard.JustDown(keySpace)) {
+            game.settings.distanceCounter = 0;
+            this.scene.start('menuScene');
             location.reload(); // Super inefficient, bad practice, but we were getting major errors with restarting the scene and not enough time to fix it 
         }
     }
