@@ -19,10 +19,11 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        this.music = this.sound.play('bgm', {
+        this.music = this.sound.add('bgm', {
             loop: true,
             volume: 0.1
         });
+        this.music.play();
 
         // set lane aspects
         game.settings.laneWidth = game.settings.runwayWidth / game.settings.numLanes; // set lane width for game
@@ -220,6 +221,7 @@ class Play extends Phaser.Scene {
         }
         else if (game.settings.scrollSpeed > 0) {
             this.player.setVelocity(0,0);
+            this.music.volume /= 2;
             game.settings.scrollSpeed -= 5;
             if (game.settings.scrollSpeed < 0) {
                 game.settings.scrollSpeed = 0;
@@ -235,6 +237,7 @@ class Play extends Phaser.Scene {
             }, this);
         }
         else {
+            this.music.destroy();
             this.scene.start("gameoverScene");
         }
     }
