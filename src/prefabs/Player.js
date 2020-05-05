@@ -45,11 +45,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
            this.params.targetPosY > game.settings.pos0 + 1
            && !this.params.isMoving) {
             this.params.targetPosY -= game.settings.laneWidth;
+            game.settings.playerXpos -= 10;
         }
         if(Phaser.Input.Keyboard.JustDown(Down) &&
            this.params.targetPosY < game.settings.pos0 + game.settings.laneWidth * (game.settings.numLanes - 1) && 
            !this.params.isMoving) {
             this.params.targetPosY += game.settings.laneWidth;
+            game.settings.playerXpos += 10;
         }
         
         // calculate movement Y

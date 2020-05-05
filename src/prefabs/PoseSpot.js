@@ -57,7 +57,7 @@ class PoseSpot extends Phaser.Physics.Arcade.Sprite {
             if(!this.params.complete) {
                 this.boo.setVolume(0.05);
                 this.boo.play();
-                this.scene.player.params.swag -= 15;
+                this.scene.player.params.swag = Math.max(this.scene.player.params.swag - 15, 0);
                 this.scene.player.params.currentCombo = 0;
             }
 
